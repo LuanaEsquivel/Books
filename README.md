@@ -1,4 +1,4 @@
-# BASE DE DATOS DE LIBROS
+# BASE DE DATOS - **LIBROS** 📚
 
 ## Descripción
 El presente proyecto tiene como objetivo aprender sobre el proceso de normalización de datos a partir de un archivo de formato .csv, con el propósito de comprender y aplicar buenas prácticas de diseño y organización de bases de datos relacionales.
@@ -11,6 +11,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 
 ## Instalación
+
 1. Descargá el script .sql o, utilizando el comando `git clone`, cloná y guardá el siguiente repositorio:
 
     ```
@@ -26,7 +27,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 2. Descargué el archivo .csv y slo importé al programa Excel para poder visualizar que los datos esten correctamente organizados y los separadores de columnas y de líneas.
 
-![alt text](<Vista en excel.png>)
+![Excel](<assets/Vista en excel.png>)
 
 3. Visualizando los datos, diseñé la estructura de la base de datos, tablas y conexiones.
 
@@ -36,7 +37,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
     CREATE DATABASE libros;
     ```
 
-5. Creé una tabla temporal para importar el archivo .csv, la utilicé como tabla madre para luego insertar los datos en las tablas definitivas.
+5. Creé una tabla temporal, llamada "**csv_temp**", para importar el archivo .csv, la utilicé como tabla madre para luego insertar los datos en las tablas definitivas.
 
     ```sql
     CREATE TABLE csv_temp (
@@ -52,7 +53,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         thumbnail VARCHAR(250) NULL
     );
     ```
-![csv_temp](csv_temp.png)
+![csv_temp](assets/csv_temp.png)
 
 6. Luego, importé el archivo .csv.
 
@@ -67,7 +68,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 7. Con todos los datos cargados, procedí a crear todas las tablas definitivas, definiendo claves primarias y foráneas, tipos de datos (INT y VARCHAR para facilitar el traspaso de los datos) y las asociaciones.
 
-    * Tabla EDITORIALES:
+    * Tabla **EDITORIALES**:
     
         ```sql
         CREATE TABLE editoriales (
@@ -76,7 +77,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla IDIOMAS:
+    * Tabla **IDIOMAS**:
     
         ```sql
         CREATE TABLE idiomas (
@@ -85,7 +86,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla AUTORES:
+    * Tabla **AUTORES**:
     
         ```sql
         CREATE TABLE autores (
@@ -94,7 +95,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla LIBROS:
+    * Tabla **LIBROS**:
     
         ```sql
         CREATE TABLE libros (
@@ -111,7 +112,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla intermedia LIBRO_AUTOR:
+    * Tabla intermedia **LIBRO_AUTOR**:
     
         ```sql
         CREATE TABLE libro_autor (
@@ -123,7 +124,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla GÉNEROS:
+    * Tabla **GÉNEROS**:
     
         ```sql
         CREATE TABLE generos (
@@ -132,7 +133,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla intermedia LIBRO_GÉNERO:
+    * Tabla intermedia **LIBRO_GÉNERO**:
     
         ```sql
         CREATE TABLE libro_genero (
@@ -144,7 +145,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         );
         ```
 
-    * Tabla MÉTRICAS:
+    * Tabla **MÉTRICAS**:
     
         ```sql
         CREATE TABLE metricas (
@@ -157,7 +158,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 8. Trasladé los datos de la tabla temporal a las definitivas. 
 
-    * Para las tablas EDITORIALES e IDIOMAS se utilizó el siguiente comando, reemplazando el nombre de las tablas y los atributos:
+    * Para las tablas **editoriales** e **idiomas** se utilizó el siguiente comando, reemplazando el nombre de las tablas y los atributos:
 
         ```sql
         INSERT INTO tabla_destino (atributos) 
@@ -165,9 +166,9 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         FROM tabla_origen;
         ```
 
-9. Debido a que en las tablas de AUTORES y GÉNEROS algunos campos poseían más de un valor único, ejecuté un script para cada tabla en Python. Este script los separó para que cada valor único obtenga su respectivo ID, y luego, guardó un archivo .csv solo con los datos de estas dos tablas. 
+9. Debido a que en las tablas de **autores** y **géneros** algunos campos poseían más de un valor único, ejecuté un script para cada tabla en Python. Este script los separó para que cada valor único obtenga su respectivo ID, y luego, guardó un archivo .csv solo con los datos de estas dos tablas. 
 
-    * Tabla AUTORES:
+    * Tabla **AUTORES**:
         ```py  
         import pandas as pd
 
@@ -182,7 +183,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         author_df.to_csv('C:/Users/Luana/Downloads/author.csv', index=False)
         ```
 
-    * Tabla GÉNEROS:
+    * Tabla **GÉNEROS**:
         ```py
         import pandas as pd
 
@@ -197,10 +198,9 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         genre_df.to_csv('C:/Users/Luana/Downloads/genre.csv', index=False)
         ```
 
-
 10. Para importar estos archivos .csv a las tablas correspondientes, utilicé los comandos:
 
-    * Archivo de AUTORES:
+    * Archivo de **AUTORES**:
         ```sql
         LOAD DATA INFILE 'C:/Users/Luana/Downloads/author.csv' 
         INTO TABLE autores 
@@ -209,7 +209,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         IGNORE 2 LINES (aut_nomb);
         ```
 
-    * Archivo de GÉNEROS:
+    * Archivo de **GÉNEROS**:
         ```sql
         LOAD DATA INFILE 'C:/Users/Luana/Downloads/genre.csv' 
         INTO TABLE generos 
@@ -218,9 +218,9 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         IGNORE 1 LINES (gen_desc);
         ```
 
-11. Trasladé los datos desde la tabla madre a las tablas definitivas que faltaban: LIBROS, MÉTRICAS y las tablas intermedias de LIBRO_AUTOR y LIBRO_GÉNERO.
+11. Trasladé los datos desde la tabla madre a las tablas definitivas que faltaban: **libros**, **métricas** y las tablas intermedias de **libro_autor** y **libro_género**.
 
-    * Tabla LIBROS:
+    * Tabla **LIBROS**:
         ```sql
         INSERT INTO libros (lib_titu, lib_desc, lib_pagi, lib_fech, lib_port, idi_id, edi_id)
         SELECT 
@@ -236,7 +236,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         JOIN editoriales e ON c.publisher = e.edi_nomb;
         ```
 
-    * Tabla MÉTRICAS:
+    * Tabla **MÉTRICAS**:
         ```sql
         INSERT INTO metricas (lib_id, met_cantcal, met_cali)
         SELECT
@@ -250,7 +250,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         GROUP BY l.lib_id;
         ```
 
-    * Tabla LIBRO_AUTOR:
+    * Tabla **LIBRO_AUTOR**:
         ```sql
         INSERT INTO libro_autor (lib_id, aut_id)
         SELECT
@@ -264,7 +264,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         GROUP BY l.lib_id;
         ```
 
-    * Tabla LIBRO_GÉNERO:
+    * Tabla **LIBRO_GÉNERO**:
         ```sql
         INSERT INTO libro_genero (lib_id, gen_id)
         SELECT
@@ -278,16 +278,80 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
         GROUP BY l.lib_id;
         ```
 
-12. Por último, eliminé la trabla temporal csv_temp:
+12. Por último, eliminé la tabla temporal **csv_temp**:
 
     ```sql
     DROP TABLE csv_temp;
     ```
 
-## Diagrama ER
-Al finalizar la creación de la base de datos con toda su estructura de tablas, relaciones y datos, utilicé el programa dbdiagram.io para graficar el Diagrama Entidad - Relación.
 
-![alt text](<diagrama lib.png>)
+## Diagrama ER
+Al finalizar la creación de la base de datos con toda su estructura de tablas, relaciones y datos, utilicé el programa "dbdiagram.io" para graficar el Diagrama Entidad - Relación.
+
+![Diagrama](assets/Diagrama%20ER.png)
+
+
+## Consultas
+Distintas consultas que realicé una vez finalizada la base de datos, para verificar su correcto funcionamiento (tablas, asociaciones y datos).
+
+* Cantidad de libros por cada género:
+
+    ```sql
+    SELECT gen_desc AS Género, COUNT(*) AS Cantidad_libros 
+    FROM libro_genero lg
+    INNER JOIN generos g ON lg.gen_id = g.gen_id
+    GROUP BY gen_desc;
+    ```
+
+* Mostrar el título(A-Z), autor, género, idioma, editorial, número de páginas y fecha de todos los libros:
+
+    ```sql
+    SELECT lib_titu AS Título, aut_nomb AS Autor, gen_desc AS Género, idi_desc AS Idioma, edi_nomb AS Editorial, lib_pagi AS Páginas, lib_fech AS Fecha
+    FROM libros l
+    INNER JOIN idiomas i ON l.idi_id = i.idi_id
+    INNER JOIN editoriales e ON l.edi_id = e.edi_id
+    INNER JOIN libro_genero lg ON l.lib_id = lg.lib_id
+    INNER JOIN generos g ON lg.gen_id = g.gen_id
+    INNER JOIN libro_autor la ON l.lib_id = la.lib_id
+    INNER JOIN autores a ON la.aut_id = a.aut_id
+    ORDER BY l.lib_titu ASC;
+    ```
+
+* Libros en inglés, que poseen 500 o más páginas, ordenados por fecha de lanzamiento:
+
+    ```sql
+    SELECT lib_titu AS Título, idi_desc AS Idioma, lib_pagi AS Páginas, lib_fech AS Fecha_Lanzamiento
+    FROM libros l
+    INNER JOIN idiomas i ON l.idi_id = i.idi_id
+    WHERE l.lib_pagi >= 500 AND i.idi_desc = "en"
+    ORDER BY l.lib_fech ASC;
+    ```
+
+* Las 5 editoriales con mayor cantidad de libros publicados:
+
+    ```sql
+    SELECT edi_nomb AS Editorial, COUNT(lib_id) AS lib_publi
+    FROM editoriales e
+    INNER JOIN libros l ON e.edi_id = l.edi_id
+    WHERE e.edi_nomb <> "Unknown Publisher" 
+    GROUP BY e.edi_id
+    ORDER BY lib_publi DESC
+    LIMIT 5;
+    ```
+
+* Géneros mejor calificados:
+
+    ```sql
+    SELECT gen_desc AS Género, ROUND(AVG(m.met_cali),0) AS prom_cali
+    FROM generos g
+    INNER JOIN libro_genero lg ON g.gen_id = lg.gen_id
+    INNER JOIN libros l ON lg.lib_id = l.lib_id
+    INNER JOIN metricas m ON l.lib_id = m.lib_id 
+    GROUP BY g.gen_id
+    ORDER BY prom_cali DESC
+    LIMIT 10;
+    ```
+
 
 ## Creadora
 El presente proyecto fue realizado por Esquivel Luana. Estudiante de la Tecnicatura Superior en Desarrollo de Software, Escuela Superior de Comercio N° 43, en la ciudad de Reconquista, Santa Fe.
