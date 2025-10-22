@@ -310,10 +310,10 @@ Distintas consultas que realicé una vez finalizada la base de datos, para verif
     FROM libros l
     INNER JOIN idiomas i ON l.idi_id = i.idi_id
     INNER JOIN editoriales e ON l.edi_id = e.edi_id
-    INNER JOIN libro_genero lg ON l.lib_id = lg.lib_id
-    INNER JOIN generos g ON lg.gen_id = g.gen_id
-    INNER JOIN libro_autor la ON l.lib_id = la.lib_id
-    INNER JOIN autores a ON la.aut_id = a.aut_id
+    LEFT JOIN libro_genero lg ON l.lib_id = lg.lib_id
+    LEFT JOIN generos g ON lg.gen_id = g.gen_id
+    LEFT JOIN libro_autor la ON l.lib_id = la.lib_id
+    LEFT JOIN autores a ON la.aut_id = a.aut_id
     ORDER BY l.lib_titu ASC;
     ```
 
