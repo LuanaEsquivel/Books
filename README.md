@@ -27,7 +27,9 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 2. Descargué el archivo .csv y slo importé al programa Excel para poder visualizar que los datos esten correctamente organizados y los separadores de columnas y de líneas.
 
-![Excel](<assets/Vista en excel.png>)
+![csv_temp](assets/.png)
+
+![csv_temp](assets/csv_temp.png)
 
 3. Visualizando los datos, diseñé la estructura de la base de datos, tablas y conexiones.
 
