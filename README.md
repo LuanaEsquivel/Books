@@ -27,9 +27,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 
 2. Descargué el archivo .csv y slo importé al programa Excel para poder visualizar que los datos esten correctamente organizados y los separadores de columnas y de líneas.
 
-![csv_temp](assets/.png)
-
-![csv_temp](assets/csv_temp.png)
+![Vista_excel](assets/Vista_excel.png)
 
 3. Visualizando los datos, diseñé la estructura de la base de datos, tablas y conexiones.
 
@@ -290,7 +288,7 @@ Para visualizar la colección de datos: [Books Dataset](https://www.kaggle.com/d
 ## Diagrama ER
 Al finalizar la creación de la base de datos con toda su estructura de tablas, relaciones y datos, utilicé el programa "dbdiagram.io" para graficar el Diagrama Entidad - Relación.
 
-![Diagrama](assets/Diagrama%20ER.png)
+![Diagrama_ER](assets/Diagrama_ER.png)
 
 
 ## Consultas
@@ -308,7 +306,7 @@ Distintas consultas que realicé una vez finalizada la base de datos, para verif
 * Mostrar el título(A-Z), autor, género, idioma, editorial, número de páginas y fecha de todos los libros:
 
     ```sql
-    SELECT lib_titu AS Título, aut_nomb AS Autor, gen_desc AS Género, idi_desc AS Idioma, edi_nomb AS Editorial, lib_pagi AS Páginas, lib_fech AS Fecha
+    SELECT lib_titu AS Título, aut_nomb AS Autor, gen_desc AS Género, idi_desc AS Idioma, edi_nomb AS Editorial, lib_pagi AS Páginas, YEAR(lib_fech) AS Fecha
     FROM libros l
     INNER JOIN idiomas i ON l.idi_id = i.idi_id
     INNER JOIN editoriales e ON l.edi_id = e.edi_id
@@ -354,6 +352,27 @@ Distintas consultas que realicé una vez finalizada la base de datos, para verif
     LIMIT 10;
     ```
 
+* Autores con mayor cantidad de libros publicados:
+
+    ```sql
+    SELECT aut_nomb AS Autor, COUNT(lib_id) AS Cant_Libros
+    FROM autores a
+    INNER JOIN libro_autor la ON a.aut_id = la.aut_id
+    WHERE a.aut_nomb <> "Unknown Author"
+    GROUP BY a.aut_id
+    ORDER BY Cant_Libros DESC
+    LIMIT 100;
+    ```
+
+* Cantidad de libros publicados por año (más reciente al más antiguo):
+
+    ```sql
+    SELECT YEAR(lib_fech) AS Año, COUNT(lib_id) AS Cant_Libros
+    FROM libros l
+    WHERE l.lib_fech IS NOT NULL
+    GROUP BY Año
+    ORDER BY Año DESC;
+    ```
 
 ## Creadora
 El presente proyecto fue realizado por Esquivel Luana. Estudiante de la Tecnicatura Superior en Desarrollo de Software, Escuela Superior de Comercio N° 43, en la ciudad de Reconquista, Santa Fe.
